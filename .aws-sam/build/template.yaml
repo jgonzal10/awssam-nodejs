@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'sam-app
+
+  Sample SAM Template for sam-app
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Outputs:
+  CreateDevelopersApi:
+    Description: API Gateway endpoint URL for Prod stage for CreateDevelopers function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/createdevelopers/
+  CreateDevelopersFunction:
+    Description: CreateDevelopers Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - CreateDevelopersFunction
+      - Arn
+  CreateDevelopersFunctionIamRole:
+    Description: Implicit IAM Role created for CreateDevelopers function
+    Value:
+      Fn::GetAtt:
+      - CreateDevelopersFunctionRole
+      - Arn
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  HelloWorldFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn
+  HelloWorldFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunctionRole
+      - Arn
+  ListDevelopersApi:
+    Description: API Gateway endpoint URL for Prod stage for List Developers function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/developers/
+  ListDevelopersFunction:
+    Description: List Developers Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ListDevelopersFunction
+      - Arn
+  ListDevelopersFunctionIamRole:
+    Description: Implicit IAM Role created for List Developers function
+    Value:
+      Fn::GetAtt:
+      - ListDevelopersFunctionRole
+      - Arn
+Resources:
+  CreateDevelopersFunction:
+    Properties:
+      CodeUri: CreateDevelopersFunction
+      Events:
+        CreateDevelopers:
+          Properties:
+            Method: get
+            Path: /createdevelopers
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  HelloWorldFunction:
+    Properties:
+      CodeUri: HelloWorldFunction
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /hello
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  ListDevelopersFunction:
+    Properties:
+      CodeUri: ListDevelopersFunction
+      Events:
+        ListDevelopers:
+          Properties:
+            Method: get
+            Path: /developers
+          Type: Api
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

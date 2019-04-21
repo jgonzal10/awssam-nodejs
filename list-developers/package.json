@@ -1,0 +1,13 @@
+{
+  "name": "list-developers",
+  "version": "1.0.0",
+  "description": "NodeJS",
+  "main": "app.js",
+  "repository": "",
+  "author": "JENNIFER GONZALEZ",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+  }
+}

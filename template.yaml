@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-app
+
+  Sample SAM Template for sam-app
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: hello-world/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /hello
+            Method: get
+  ListDevelopersFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: list-developers/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Events:
+        ListDevelopers:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /developers
+            Method: get
+  CreateDevelopersFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: create-developers/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Events:
+        CreateDevelopers:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /createdevelopers
+            Method: get  
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
+  HelloWorldFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt HelloWorldFunctionRole.Arn
+
+  ListDevelopersApi:
+    Description: "API Gateway endpoint URL for Prod stage for List Developers function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/developers/"
+  ListDevelopersFunction:
+    Description: "List Developers Lambda Function ARN"
+    Value: !GetAtt ListDevelopersFunction.Arn
+  ListDevelopersFunctionIamRole:
+    Description: "Implicit IAM Role created for List Developers function"
+    Value: !GetAtt ListDevelopersFunctionRole.Arn
+  CreateDevelopersApi:
+    Description: "API Gateway endpoint URL for Prod stage for CreateDevelopers function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/createdevelopers/"
+  CreateDevelopersFunction:
+    Description: "CreateDevelopers Lambda Function ARN"
+    Value: !GetAtt CreateDevelopersFunction.Arn
+  CreateDevelopersFunctionIamRole:
+    Description: "Implicit IAM Role created for CreateDevelopers function"
+    Value: !GetAtt CreateDevelopersFunctionRole.Arn
